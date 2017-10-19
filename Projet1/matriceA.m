@@ -1,9 +1,9 @@
 % edt RechOp
 % 1ere partie de la matrice A
-p = 2;
+p = 8;
 c = 2;
-d = 2;
-t = 2;
+d = 5;
+t = 4;
 dt = d * t;
 A1 = zeros(c * d*t, p * c * d*t);
 
