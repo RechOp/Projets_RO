@@ -92,7 +92,7 @@ for i1 = 1 : p
 					for l = 1 : d
 						for k = 1 : t
 							
-							m = i + (j-1) * p + (k-1) * p * c;
+							m = i + (j-1) * p + ((k-1) * p * c) + ((l - 1) * t * p * c);
 							if (i1 == i) & (j1 == j) & (l1 == l)
 								A3(n, m) = 1;
 							end
