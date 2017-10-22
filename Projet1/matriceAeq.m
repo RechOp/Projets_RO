@@ -18,10 +18,10 @@ Aeq1 = zeros(p*c, p * c * d*t);
 %int n;
 %int l;
 
-% l = i1 + (j1 - 1) * c
+% l = i1 + (j1 - 1) * p
 for i1 = 1 : p
 	for j1 = 1 : c
-		l = i1 + ((j1 - 1) * c);
+		l = i1 + ((j1 - 1) * p);
 		
 		% m = i + (j-1) * p + (k-1) * p * c
 		for i = 1 : p
@@ -107,7 +107,7 @@ Aeq4 = zeros(p*c, p * c * d*t);
 % l = i1 + (j1 - 1) * c
 for i1 = 1 : p
 	for j1 = 1 : c
-		l = i1 + ((j1 - 1) * c);
+		l = i1 + ((j1 - 1) * p);
 		
 		% m = i + (j-1) * p + (k-1) * p * c
 		for i = 1 : p
