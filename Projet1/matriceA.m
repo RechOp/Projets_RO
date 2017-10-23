@@ -23,8 +23,8 @@ A1 = zeros(c * d*t, p * c * d*t);
 		% m = i + (j-1) * p + (k-1) * p * c
 		for j = 1 : c
 			for k = 1 : (dt)
+				l = j + (k - 1) * c;
 				for i = 1 : p
-					l = j + (k - 1) * c;
 					m = i + ((j - 1) * p) + ((k - 1) * p * c);
 					A1(l, m) = 1;
 				end
@@ -52,8 +52,8 @@ A2 = zeros(p * d * t, p * c * d * t);
 		% m = i + (j-1) * p + (k-1) * p * c
 		for i = 1 : p
 			for k = 1 : (dt)
+				l = i + (k - 1)*p;
 				for j = 1 : c
-					l = i + (k - 1)*p;
 					m = i + ((j-1) * p) + ((k-1) * p * c);
 					A2(l, m) = 1;
 				end
@@ -83,11 +83,15 @@ A3 = zeros(p*c*d, p * c * d*t);
 			for i = 1 : p
 				for j = 1 : c
 					for l = 1 : d
+						n = i + (j-1)*p + (l-1)*p*c;
 						for k = (l-1)*t+1:l*t
-							n = i + (j-1)*p + (l-1)*p*c;
 							m = i + (j-1) * p + ((k-1) * p * c);
 							A3(n, m) = 1;
 						end
+						indPascal = 4 + ((j-1) * p) + ((l-1) * p * c);
+						indAda = 5 + ((j-1) * p) + ((l-1) * p * c);
+						b(200 + indPascal) = 2;
+						b(200 + indAda) = 2;
 					end
 				end
             end
