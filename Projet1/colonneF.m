@@ -18,26 +18,15 @@ f = zeros(p*c*d*t,1);
 % m = i + (j-1)*p + (k-1)*p*c + (l-1)*p*c*t;
 for i = 1 : p
 	for j = 1 : c
-		for l = 1 : d
-            for k = 1 : t
-                m = i + (j-1)*p + (k-1)*p*c + (l-1)*p*c*t;
-                if (k == 1) || (k == t)
-                    f(m) = 1;
-                end
-            end
+		for l = 0 : (d - 1)
+            m1 = i + (j-1)*p + (((l*t + 1) - 1)*p*c);
+            m2 = i + (j-1)*p + (((l*t + t) - 1)*p*c);
+			f(m1) = 1;
+			f(m2) = 1;
         end
 	end
 end
 
 lb = zeros(p*c*d*t,1);
 ub = ones(p*c*d*t,1);
-intcon = ones(p*c*d*t,1);
-% m = i + (j-1) * p + (k-1) * p * c
-for i = 1 : p
-	for j = 1 : c
-		for k = 1 : (d*t)
-    		m = i + ((j - 1) * p) + ((k - 1) * p * c);
-			intcon(m,1) = m;
-		end
-	end
-end
+intcon=1:p*c*dt;
