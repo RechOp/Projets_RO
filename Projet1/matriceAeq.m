@@ -27,8 +27,7 @@ Aeq1 = zeros(p*c, p * c * d*t);
 			for k = 1 : (dt)
 				l = j + (k - 1) * c;
 				for i = 1 : p
-					m = i + ((j - 1) * p) + ((k - 1) * p * c);
-					Aeq1(l, m) = 1;
+					Aeq1(l, indiceEq(i,j,k,p,c)) = 1;
 				end
 			end
 		end
@@ -55,12 +54,7 @@ Aeq2 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 7) & (j == 1) & (k == 15)
-				Aeq2(1, m) = 1;
-			end
-
+			Aeq2(1, indiceEq(7,1,15,p,c)) = 1;
 		end
 	end
 end
@@ -80,12 +74,7 @@ Aeq3 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 8) & (j == 2) & (k == 15)
-				Aeq3(1, m) = 1;
-			end
-
+			Aeq3(1, indiceEq(8,2,15,p,c)) = 1;
 		end
 	end
 end
@@ -100,25 +89,11 @@ Aeq4 = zeros(p*c, p * c * d*t);
 % Remarque : de cette façon on incremente d'abord i, puis j, et ensuite k
 
 
-% l = i1 + (j1 - 1) * c
-for i1 = 1 : p
-	for j1 = 1 : c
-		l = i1 + ((j1 - 1) * p);
-		
-		% m = i + (j-1) * p + (k-1) * p * c
-		for i = 1 : p
-			for j = 1 : c
-				for k = 1 : (dt)
-
-					m = i + ((j - 1) * p) + ((k - 1) * p * c);
-					if (i1 == i) & (j1 == j) & (k == 1)
-						Aeq4(l, m) = 1;
-					end
-
-				end
-			end
-		end
-
+% l = i1 + (j1 - 1) * p
+for i=1:p
+    for j=1:c
+		l = i + ((j - 1) * p);
+        Aeq4(l,indiceEq(i,j,1,p,c))=1;
 	end
 end
 
@@ -137,12 +112,7 @@ Aeq5 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 2) & (j == 2) & (k == 1)
-				Aeq5(1, m) = 1;
-			end
-
+			Aeq5(1, indiceEq(2,2,1,p,c)) = 1;
 		end
 	end
 end
@@ -162,12 +132,7 @@ Aeq6 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 2) & (j == 2) & (k == 2)
-				Aeq6(1, m) = 1;
-			end
-
+			Aeq6(1, indiceEq(2,2,2,p,c)) = 1;
 		end
 	end
 end
@@ -195,11 +160,7 @@ Aeq7 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 3) & (j == 1) & (k == 9)
-				Aeq7(1, m) = 1;
-			end
+			Aeq7(1, indiceEq(3,1,9,p,c)) = 1;
 
 		end
 	end
@@ -220,11 +181,7 @@ Aeq8 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 3) & (j == 2) & (k == 9)
-				Aeq8(1, m) = 1;
-			end
+			Aeq8(1, indiceEq(3,2,9,p,c)) = 1;
 
 		end
 	end
@@ -245,11 +202,7 @@ Aeq9 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 3) & (j == 1) & (k == 10)
-				Aeq9(1, m) = 1;
-			end
+			Aeq9(1, indiceEq(3,1,10,p,c)) = 1;
 
 		end
 	end
@@ -270,11 +223,7 @@ Aeq10 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 3) & (j == 2) & (k == 10)
-				Aeq10(1, m) = 1;
-			end
+			Aeq10(1, indiceEq(3,2,10,p,c)) = 1;
 
 		end
 	end
@@ -295,12 +244,7 @@ Aeq11 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 3) & (j == 1) & (k == 11)
-				Aeq11(1, m) = 1;
-			end
-
+			Aeq11(1, indiceEq(3,1,11,p,c)) = 1;
 		end
 	end
 end
@@ -320,11 +264,7 @@ Aeq12 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 3) & (j == 2) & (k == 11)
-				Aeq12(1, m) = 1;
-			end
+			Aeq12(1, indiceEq(3,2,11,p,c)) = 1;
 
 		end
 	end
@@ -345,11 +285,7 @@ Aeq13 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 3) & (j == 1) & (k == 12)
-				Aeq13(1, m) = 1;
-			end
+			Aeq13(1, indiceEq(3,1,12,p,c)) = 1;
 
 		end
 	end
@@ -370,12 +306,7 @@ Aeq14 = zeros(1, p * c * d * t);
 for i = 1 : p
 	for j = 1 : c
 		for k = 1 : (dt)
-
-			m = i + ((j-1) * p) + ((k-1) * p * c);
-			if (i == 3) & (j == 2) & (k == 12)
-				Aeq14(1, m) = 1;
-			end
-
+			Aeq14(1, indiceEq(3,2,12,p,c)) = 1;
 		end
 	end
 end
@@ -387,7 +318,7 @@ end
 
 
 
-Aeq = [Aeq1;Aeq2;Aeq3];
+Aeq = [Aeq1;Aeq2;Aeq3;Aeq4;Aeq5;Aeq6;Aeq7;Aeq8;Aeq9;Aeq10;Aeq11;Aeq12;Aeq13;Aeq14];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

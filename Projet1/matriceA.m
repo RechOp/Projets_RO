@@ -25,8 +25,7 @@ A1 = zeros(c * d*t, p * c * d*t);
 			for k = 1 : (dt)
 				l = j + (k - 1) * c;
 				for i = 1 : p
-					m = i + ((j - 1) * p) + ((k - 1) * p * c);
-					A1(l, m) = 1;
+		        	A1(l,indiceEq(i,j,k,p,c))=1;
 				end
 			end
 		end
@@ -54,8 +53,7 @@ A2 = zeros(p * d * t, p * c * d * t);
 			for k = 1 : (dt)
 				l = i + (k - 1)*p;
 				for j = 1 : c
-					m = i + ((j-1) * p) + ((k-1) * p * c);
-					A2(l, m) = 1;
+		        	A2(l,indiceEq(i,j,k,p,c))=1;
 				end
 			end
 		end
@@ -85,13 +83,13 @@ A3 = zeros(p*c*d, p * c * d*t);
 					for l = 1 : d
 						n = i + (j-1)*p + (l-1)*p*c;
 						for k = (l-1)*t+1:l*t
-							m = i + (j-1) * p + ((k-1) * p * c);
-							A3(n, m) = 1;
+							A3(n, indiceEq(i,j,k,p,c)) = 1;
 						end
-						indPascal = 4 + ((j-1) * p) + ((l-1) * p * c);
-						indAda = 5 + ((j-1) * p) + ((l-1) * p * c);
-						b(200 + indPascal) = 2;
-						b(200 + indAda) = 2;
+            			if(i==4 || i==5)
+							b(n)=2;
+						else 
+							b(n)=1;
+						end
 					end
 				end
             end

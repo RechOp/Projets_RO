@@ -19,10 +19,8 @@ f = zeros(p*c*d*t,1);
 for i = 1 : p
 	for j = 1 : c
 		for l = 0 : (d - 1)
-            m1 = i + (j-1)*p + (((l*t + 1) - 1)*p*c);
-            m2 = i + (j-1)*p + (((l*t + t) - 1)*p*c);
-			f(m1) = 1;
-			f(m2) = 1;
+        		f(indiceEq(i,j,l*t+1,p,c)=1;
+                f(indiceEq(i,j,l*t+t,p,c)=1;
         end
 	end
 end
