@@ -5,7 +5,10 @@ c = 2;
 d = 5;
 t = 4;
 dt = d * t;
-A1 = zeros(c * d*t, p * c * d*t);
+A = zeros(280, p * c * d*t);
+b = zeros(280,1);
+
+numCin = 1;
 
 % les indices de A1 sont 'l' et 'm', tels que : {l = j + (k-1) * c;  m = i + (j-1) * p + (k-1) * p * c}
 % avec i, j et k les 3 indices de la matrice tridimensionnelle X (ramenée à une seule colonne de taille p*c*d*t (pour faciliter l'mplementation du problème),
@@ -23,10 +26,11 @@ A1 = zeros(c * d*t, p * c * d*t);
 		% m = i + (j-1) * p + (k-1) * p * c
 		for j = 1 : c
 			for k = 1 : (dt)
-				l = j + (k - 1) * c;
 				for i = 1 : p
-		        	A1(l,indiceEq(i,j,k,p,c))=1;
+		        	A(numCin,indiceEq(i,j,k,p,c))=1;
 				end
+    	    b(numCin)=1;
+			numCin = numCin+1;
 			end
 		end
 
@@ -37,7 +41,6 @@ A1 = zeros(c * d*t, p * c * d*t);
 
 
 % 2ieme partie de la matrice A
-A2 = zeros(p * d * t, p * c * d * t);
 
 % les indices de A2 sont 'l' et 'm', tels que : {l = i + (k-1) * p;  m = i + (j-1) * p + (k-1) * p * c}
 % avec i, j et k les 3 indices de la matrice tridimensionnelle X (ramenée à une seule colonne de taille p*c*d*t (pour faciliter l'mplementation du problème),
@@ -51,10 +54,11 @@ A2 = zeros(p * d * t, p * c * d * t);
 		% m = i + (j-1) * p + (k-1) * p * c
 		for i = 1 : p
 			for k = 1 : (dt)
-				l = i + (k - 1)*p;
 				for j = 1 : c
-		        	A2(l,indiceEq(i,j,k,p,c))=1;
+		        	A(numCin,indiceEq(i,j,k,p,c))=1;
 				end
+				b(numCin) = 1;
+				numCin = numCin + 1;
 			end
 		end
 		
@@ -65,7 +69,6 @@ A2 = zeros(p * d * t, p * c * d * t);
 
 % edt RechOp
 % 3ieme partie de la matrice A
-A3 = zeros(p*c*d, p * c * d*t);
 
 % les indices de A1 sont 'n' et 'm', tels que : {n = i + (j-1)*p + (l-1)*p*c ;  m = i + (j-1)*p + (k-1)*p*c + (l-1)*p*c*t}
 % avec i, j et k1 = ((l-1)*t + k) les 3 indices de la matrice tridimensionnelle X (ramenée à une seule colonne de taille p*c*d*t (pour faciliter l'mplementation du problème),
@@ -77,27 +80,23 @@ A3 = zeros(p*c*d, p * c * d*t);
 %	for j1 = 1 : c
 %		for l1 = 1 : d
 		
-			%  m = i + (j-1)*p + (k-1)*p*c + (l-1)*p*c*t
-			for i = 1 : p
-				for j = 1 : c
-					for l = 1 : d
-						n = i + (j-1)*p + (l-1)*p*c;
-						for k = (l-1)*t+1:l*t
-							A3(n, indiceEq(i,j,k,p,c)) = 1;
-						end
-            			if(i==4 || i==5)
-							b(n)=2;
-						else 
-							b(n)=1;
-						end
-					end
+	%  m = i + (j-1)*p + (k-1)*p*c + (l-1)*p*c*t
+	for i = 1 : p
+		for j = 1 : c
+			for l = 1 : d
+				for k = (l-1)*t+1:l*t
+					A(numCin, indiceEq(i,j,k,p,c)) = 1;
 				end
-            end
+          		if(i==4 || i==5)
+					b(numCin)=2;
+				else 
+					b(numCin)=1;
+				end
+			numCin = numCin + 1;
+			end
+		end
+    end
             
 %        end
 %	end
 %end
-
-A = [A1;A2;A3];
-
-b = ones(size(A,1),1);
