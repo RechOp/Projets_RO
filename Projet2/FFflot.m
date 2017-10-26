@@ -11,52 +11,57 @@
 % Vecteur des successeurs de chaque sommet : SUC
 %
 %% Initialisations
-NSUC = uint16([3 0 3 1 2 3 2 2]);
+NSUC = uint16([1 2 2 1]);
 n = size(NSUC,2);
 X = uint16(1:n); % X contient la liste des sommets de G
 m = sum(NSUC);
 %
 % Vecteur des successeurs de chaque sommet : SUC
-SUC = uint16([2 3 4 4 5 6 8 6 7 4 7 8 5 2 7 2]);
+SUC = uint16([2 3 4 1 4 1]);
 %
-% Vecteur des longueurs de chaque arc
-LONG = [inf 1 2 5 3 3 2 0 3 1 3 7 2 1 2 4];
+% Vecteur des capacités max de chaque arc
+CAPMAX = [inf 1 4 5 2 3];
+CAP = [0 0 0 0 0 0];
 %
-% Vecteur du flot courant theta
-theta = zeros(1,m);
+% Vecteur du flot courant phi
+phi = 0;
 %
 MARQUE = false(1,n); % MARQUE est un vecteur logique
 MARQUE(2) = true; % on marque le sommet a == 2 ( b == 1 (b,a) == 1)
 %
-NONMARQUES = X(~MARQUE); % NONMARQUES contient la liste des sommets non marqués
+%MARQUES = X(MARQUE); % NONMARQUES contient la liste des sommets non marqués
 %
 
 
 %% Algorithme de FF
-while ismember(1,NONMARQUES) % Tant que b == 1 non marqué
-    CANDIDATS = false(1,n); % CANDIDATS est un vecteur logique contenant les candidats à
-    % être marqués
-    %
+
+bloque =false; 
+i = 2; % i est marqué
+while ismember(1,NONMARQUES) && ~bloque % Tant que b == 1 non marqué
+
     %% 1.   MAJ flot courant theta
     alpha = inf;
     vcycle = zeros(1,m); % vecteur cycle des sommets non marqués
-    for l=1:size(NONMARQUES,2)
-        i = NONMARQUES(l); % i est non marqué
-        if NSUC(i) ~= 0 % le nombre de successeurs de i est non nul
-            prsuc = sum(NSUC(1:i-1)) + 1; % prsuc contient l'indice du 1er successeur de i dans SUC
-            for k = prsuc:prsuc+NSUC(i)-1
-                j = SUC(k); % (i,j) est un arc
-                if MARQUE(j)
-                    % j est un sommet marqué (et i est nonmarqué donc (i,j)
-                    % appartient au cycle
-                    % donc i est candidat à être marqué
-                    CANDIDATS(i) = true;
-                    alpha = min(alpha,LONG(k)-theta(k)); % alpha > 0
-                    vcycle(k) = 1;
-                end
+    if NSUC(i) ~= 0 % le nombre de successeurs de i est non nul
+        prsuc = sum(NSUC(1:i-1)) + 1; % prsuc contient l'indice du 1er successeur de i dans SUC
+        k = prsuc;
+        j = SUC(k);
+        while(~MARQUE(j) && k <= prsuc + NSUC(i)-1)
+            %for k = prsuc:prsuc+NSUC(i)-1
+            j = SUC(k);
+            if CAP(i + k - prsuc) < CAPMAX(i + k - prsuc)
+                MARQUE(j)= true;
+                
             end
+            k=k+1;
+        end
+        if (k>  prsuc + NSUC(i)-1)
+            bloque = true;
+        else
+            i=j;
         end
     end
+end
     theta = theta + alpha*vcycle; %MAJ theta
     %
     %% 2.   Marquer sommets
@@ -78,4 +83,3 @@ while ismember(1,NONMARQUES) % Tant que b == 1 non marqué
         end
     end
 end
-
