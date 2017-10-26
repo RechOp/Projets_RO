@@ -21,12 +21,12 @@ numCeq = 1;
 %int n;
 %int l;
 
-beq(nceq:nceq+p*c-1)=[5;0;0;4;3;3;6;0;0;6;3;3;1;0;0;1];
+beq(numCeq:numCeq+p*c-1)=[5;0;0;4;3;3;6;0;0;6;3;3;1;0;0;1];
 
 for i=1:p
     for j=1:c
 		for k=1:dt
-        		Aeq(numCeq,indiceEq(i,j,k,c,dt))=1;
+        		Aeq(numCeq,indiceEq(i,j,k,p,c))=1;
 		end
 		numCeq = numCeq + 1;
 	end
@@ -40,12 +40,12 @@ end
 %Les cours de sport ont lieu le jeudi après-midi de 14h à 16h.
 %les profs de sport sont (i=7)Melle Gazelle et (i=8)Mr Bigceps
 
-Aeq(numCeq,indiceEq(7,1,15,c,dt))=1;
+Aeq(numCeq,indiceEq(7,1,15,p,c))=1;
 
 beq(numCeq)=1;
 numCeq = numCeq + 1;
 
-Aeq(numCeq,indiceEq(8,2,15,c,dt))=1;
+Aeq(numCeq,indiceEq(8,2,15,p,c))=1;
 
 beq(numCeq)=1;
 numCeq = numCeq + 1;
@@ -62,7 +62,7 @@ numCeq = numCeq + 1;
 
 for i=1:p
     for j=1:c
-        Aeq(numCeq,indiceEq(i,j,1,c,dt))=1;
+        Aeq(numCeq,indiceEq(i,j,1,p,c))=1;
 		beq(numCeq)=0;
 		numCeq=numCeq+1;
 	end
@@ -73,7 +73,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 for k=1:2
-    Aeq(numCeq,lin_index(2,2,k,c,dt))=1;
+    Aeq(numCeq,indiceEq(2,2,k,p,c))=1;
 	beq(numCeq)=0;
 	numCeq = numCeq + 1;
 end
@@ -87,11 +87,12 @@ end
 
 for j=1:2
 	for k=9:12
-       	Aeq(numCeq,indiceEq(3,j,k,c,dt))=1;
+       	Aeq(numCeq,indiceEq(3,j,k,p,c))=1;
 		beq(numCeq) = 0;
 		numCeq = numCeq + 1;
 	end
 end
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -101,23 +102,25 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+matriceA;
+colonneF;
 
-%x = intlinprog(f,intcon,A,b,Aeq,beq,lb,ub);
+x = intlinprog(f,intcon,A,b,Aeq,beq,lb,ub);
 
-%Promo1=zeros(4,5);
-%Promo2=zeros(4,5);
-%for i=1:p
-%    for j=1:c
-%        for l=1:d
-%            for m=1:t
-%             
-%                    if j==1
-%                        Promo1(m,l)=i;
-%                    elseif j==2
-%                         Promo2(m,l)=i;
-%                    end
-%                end
-%            end
-%        end
-%    end
-%end
+Promo1=zeros(4,5);
+Promo2=zeros(4,5);
+for i=1:p
+    for j=1:c
+        for l=1:d
+            for m=1:t
+                if(x(indiceEq(i,j,(l-1)*t+m,p,c))==1)
+                    if j==1
+                        Promo1(m,l)=i;
+                    elseif j==2
+                         Promo2(m,l)=i;
+                    end
+                end
+            end
+        end
+    end
+end
