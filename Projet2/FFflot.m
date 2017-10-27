@@ -46,7 +46,8 @@ while ~bloque % Tant que chemin possible
     chemin(1)= 2;
 	chemin = trouverChemin(2,SUC, NSUC, PRE, NPRE, MARQUE, CAP, CAPMAX, chemin, 2);
 	%% 2. Mettre à jour les capicités des flots
-    if chemin(1) == -1
+    dernier = chemin(size(chemin,2));
+    if dernier ~= 1 % Si on a pas atteint le bout
 		bloque = true;
 	else
 		alpha = inf;

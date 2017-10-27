@@ -27,7 +27,7 @@ function[chemin] = trouverChemin(i,SUC, NSUC, PRE, NPRE, MARQUE, CAP, CAPMAX, ch
         end
     end
     dernier = chemin(size(chemin,2));
-    if i~=2 && dernier~=1
+    if dernier~=1
         if NPRE(i) ~= 0 % le nombre de predecesseurs de i est non nul
             prpre = sum(NPRE(1:i-1)) + 1; % prpre contient l'indice du 1er predecesseur de i dans SUC
             for k=prpre:prpre + NPRE(i)-1  % on parcours les predecesseur
@@ -43,7 +43,7 @@ function[chemin] = trouverChemin(i,SUC, NSUC, PRE, NPRE, MARQUE, CAP, CAPMAX, ch
                                     chemin = trouverChemin(j,SUC, NSUC, PRE, NPRE, MARQUE, CAP, CAPMAX,chemin, p+1);                              
                                 end
                             
-                                dernier = chemin(size(chemin,2));
+                                dernier = chemin(size(chemin,2))
                                 if dernier ~= 1 % Si on a pas atteint le bout
                                     MARQUE(j) = false;
                                     chemin = chemin(1:p-1);
